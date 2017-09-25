@@ -1,0 +1,26 @@
+body, html, #home, #about, #project, #lab {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Helvetica;
+ }
+
+ body {
+   overflow: hidden;
+ }
+
+#about, #project, #lab {
+  display: none;
+  opacity: 0;
+}
+
+@font-face {
+  font-family: "Bodoni";
+  src: url('http://localhost:3000/fonts/BodoniStd-Book.otf');
+}
+
+@font-face {
+  font-family: "Bodoni";
+  src: url('http://localhost:3000/fonts/BodoniStd-BookItalic.otf');
+  font-style: italic;
+}

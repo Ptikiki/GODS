@@ -1,0 +1,144 @@
+#lab {
+  position: relative;
+  z-index: 4;
+}
+
+.lab{
+  width: 100%;
+  height: 100%;
+  display: none;
+  opacity: 0;
+  background: white;
+
+  &__video__container {
+    width: 100%;
+    height: 75%;
+    overflow: hidden;
+    background-color: black;
+
+    video {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+    }
+  }
+
+  &__desc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 25%;
+    width: 100%;
+    padding-left: 9%;
+    padding-right: 9%;
+    box-sizing: border-box;
+
+    .desc {
+      padding-bottom: 2%;
+
+      p {
+        position: relative;
+        top: 0;
+        margin: 0;
+        padding: 5px 0;
+        opacity: 1;
+      }
+
+      .title {
+        font-family: 'Bodoni';
+        font-size: 35px;
+        color: #E79898;
+        padding-bottom: 10px;
+      }
+
+      .date, .techno {
+        font-size: 16px;
+        color: #9E8888;
+      }
+    }
+
+    &__nav {
+
+      .arrow-prev, .arrow-next {
+        position: relative;
+        width: 12px;
+        height: 12px;
+        border-left: 2px solid #9E8888;
+        border-top: 2px solid #9E8888;
+      }
+
+      .arrow-prev {
+        left: 5px;
+        transform: rotate(-45deg);
+        margin-bottom: 10px;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.4;
+          transition: opacity 0.3s ease;
+        }
+      }
+
+      .arrow-next {
+        right: 5px;
+        transform: rotate(135deg);
+        margin-top: 10px;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.4;
+          transition: opacity 0.3s ease;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 940px) {
+    &__desc {
+      .desc {
+        .title {
+          font-size: 25px;
+        }
+
+        .date, .techno {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    background: none;
+
+    &__desc {
+      .desc {
+        .title {
+          font-size: 20px;
+        }
+
+        .date, .techno {
+          font-size: 12px;
+        }
+      }
+      &__nav {
+        left: 42%;
+
+        .arrow-prev, .arrow-next {
+          width: 8px;
+          height: 8px;
+        }
+
+        .arrow-prev {
+          left: 2px;
+          margin-bottom: 7px;
+        }
+
+        .arrow-next {
+          right: 2px;
+          margin-top: 7px;
+        }
+      }
+    }
+  }
+}
