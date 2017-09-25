@@ -1,13 +1,13 @@
 {
-  "name": "Portfolio",
+  "name": "starter",
   "version": "0.2.0",
   "config": {
     "port": "3000"
   },
   "scripts": {
-    "start": "webpack-dev-server --port $npm_package_config_port",
+    "start": "node_modules/.bin/webpack-dev-server.cmd --content-base app",
     "https": "webpack-dev-server --port $npm_package_config_port --https",
-    "build": "mkdir build & cp ./src/*.html ./build/ & cp ./src/assets ./build/assets & cp ./src/fonts ./build/fonts & webpack -p"
+    "build": "mkdir build & cp ./src/*.html ./build/ & cp -R ./src/assets ./build/assets & webpack -p"
   },
   "dependencies": {
     "babel-core": "^6.23.1",
@@ -20,6 +20,8 @@
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.2",
     "style-loader": "^0.13.2",
+    "three": "^0.87.1",
+    "three-orbit-controls-loader": "^1.0.1",
     "vue": "^2.2.6",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^7.3.0",
@@ -28,6 +30,7 @@
   },
   "paths": {},
   "devDependencies": {
+    "gsap": "^1.19.1",
     "image-webpack-loader": "^3.3.0",
     "uglify-js": "^2.8.22"
   }
