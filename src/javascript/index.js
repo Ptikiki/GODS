@@ -1,6 +1,10 @@
 const THREE = require('three')
-/*const OrbitControls = require('three-orbit-controls-loader')
-OrbitControls(THREE)*/
+const STLLoader = require('three-stl-loader')(THREE)
+
+console.log(STLLoader)
+
+const OrbitControls = require('three-orbit-controls-loader')
+OrbitControls(THREE)
 
 import Vue from 'vue'
 

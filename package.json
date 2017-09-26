@@ -22,6 +22,7 @@
     "style-loader": "^0.13.2",
     "three": "^0.87.1",
     "three-orbit-controls-loader": "^1.0.1",
+    "three-stl-loader": "^1.0.6",
     "vue": "^2.2.6",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^7.3.0",
