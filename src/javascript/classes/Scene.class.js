@@ -6,11 +6,17 @@ class Scene {
       STORAGE.scene = this.scene
       this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       STORAGE.camera = this.camera
+      STORAGE.camera.position.z = 480
+      // this.controls = new THREE.OrbitControls( STORAGE.camera )
+      // this.controls.target.set( 0, 0, 0 )
       this.light = new THREE.PointLight(0xffffff, 1, Infinity)
       this.light.position.set(20, 0, 20)
       STORAGE.scene.add(this.light)
       this.lightAmb = new THREE.AmbientLight(0x777777)
       STORAGE.scene.add(this.lightAmb)
+
+      this.raycaster = new THREE.Raycaster()
+      this.mouse = new THREE.Vector2()
 
       this.init()
       this.bind()
@@ -18,16 +24,40 @@ class Scene {
     }
 
     init() {
-      this.createCube()
       this.createBackground()
+      this.createStatue()
     }
 
-    createCube() {
-      this.geometry = new THREE.BoxGeometry( 50, 50, 50 )
-      this.material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } )
-      this.cube = new THREE.Mesh( this.geometry, this.material )
-      STORAGE.scene.add( this.cube )
-      STORAGE.camera.position.z = 480
+    createStatue() {
+      this.manager = new THREE.LoadingManager()
+      this.manager.onProgress = function ( item, loaded, total ) {
+        console.log( item, loaded, total )
+      }
+
+      this.loader = new THREE.OBJLoader( this.manager )
+      this.loader.load( 'assets/statue.obj', function ( object ) {
+        // object.traverse( function ( child ) {
+        //   if ( child instanceof THREE.Mesh ) {
+        //     child.material.map = texture;
+        //   }
+        // } )
+
+        object.position.x = 0
+        object.position.y = -200
+        object.position.z = 100
+        //object.rotation.x = -300
+        object.rotation.y = 1.5
+        //object.rotation.z = 100
+        object.scale.x = 3
+        object.scale.y = 3
+        object.scale.z = 3
+
+        STORAGE.scene.add( object )
+        STORAGE.statue = object
+
+      } )
+
+      console.log(STORAGE.loader)
     }
 
     createBackground() {
@@ -57,11 +87,26 @@ class Scene {
       STORAGE.backgroundScene.add(STORAGE.backgroundCamera )
       STORAGE.backgroundScene.add(this.backgroundMesh )*/
       STORAGE.scene.add(this.backgroundMesh)
-      STORAGE.carrousel = this.backgroundMesh
+      STORAGE.carrousel = this.backgroundMesh        
+    }
+
+    onMouseMove(event) {
+      let that = STORAGE.SceneClass
+      
+      that.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1
+      that.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1
+      that.raycaster.setFromCamera( that.mouse, STORAGE.camera )
+      that.intersects = that.raycaster.intersectObjects( STORAGE.scene.children )
+
+      console.log(that.mouse.x)
+      
+      //INTERACTION AU MOUVEMENT DE LA SOURIS ==> ROTATION DE LA STATUE
+
     }
 
     bind() {
       document.addEventListener( 'wheel', this.onDocumentMouseWheel, false )
+      document.addEventListener('mousemove', this.onMouseMove, false )
       window.addEventListener( 'resize', this.onWindowResize, false )
     }
 
@@ -90,8 +135,6 @@ class Scene {
 
     animate() {
       let that = STORAGE.SceneClass
-      that.cube.rotation.x += 0.05
-      that.cube.rotation.y += 0.02
       STORAGE.renderer.render(STORAGE.scene, STORAGE.camera)
       requestAnimationFrame( that.animate )
     }
