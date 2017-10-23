@@ -2,10 +2,10 @@
   "name": "starter",
   "version": "0.2.0",
   "config": {
-    "port": "3000"
+    "port": "8080"
   },
   "scripts": {
-    "start": "node_modules/.bin/webpack-dev-server.cmd --content-base app",
+    "start": "webpack-dev-server --port $npm_package_config_port",
     "https": "webpack-dev-server --port $npm_package_config_port --https",
     "build": "mkdir build & cp ./src/*.html ./build/ & cp -R ./src/assets ./build/assets & webpack -p"
   },
