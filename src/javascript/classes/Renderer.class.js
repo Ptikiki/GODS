@@ -1,7 +1,7 @@
 class Renderer {
 
     constructor(options) {
-      this.container = document.getElementById( 'container' )
+      this.container = document.getElementById( 'canvas' )
       this.renderer = new THREE.WebGLRenderer(window.innerWidth, window.innerHeight)
       this.renderer.setSize( window.innerWidth, window.innerHeight )
       this.container.appendChild( this.renderer.domElement )

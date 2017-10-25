@@ -2,7 +2,7 @@ const sliderHomeDatas = {
   slider: [
     {
       src: 'assets/slider-home/slider-sum.jpg',
-      title: 'Sum, an initation quest',
+      title: 'ECHAPATOIRE ACCIDENTELLE',
       date: 'In progress',
       projectId: 0,
       type: 'project',
@@ -10,7 +10,7 @@ const sliderHomeDatas = {
     },
     {
       src: 'assets/slider-home/slider-travel.jpg',
-      title: 'Travel Revolution',
+      title: 'SERIOUS GAME',
       date: 'March 2017',
       projectId: 1,
       type: 'project',
@@ -18,7 +18,7 @@ const sliderHomeDatas = {
     },
     {
       src: 'assets/slider-home/slider-terre-promise.png',
-      title: 'Promised Land',
+      title: 'SUM',
       date: 'December 2016',
       projectId: 2,
       type: 'project',
@@ -26,7 +26,7 @@ const sliderHomeDatas = {
     },
     {
       src: 'assets/slider-home/slider-nosheetpaper.jpg',
-      title: 'NoSheetPaper',
+      title: 'ALLREAL',
       date: 'June 2016',
       projectId: 3,
       type: 'project',
@@ -34,7 +34,7 @@ const sliderHomeDatas = {
     },
     {
       src: 'assets/slider-home/slider-memos.jpg',
-      title: 'Memo\'s',
+      title: 'EURO 2016',
       date: 'February 2016',
       projectId: 4,
       type: 'project',
@@ -42,7 +42,7 @@ const sliderHomeDatas = {
     },
     {
       src: 'assets/slider-home/slider-change.png',
-      title: 'Change Something',
+      title: 'SHAKIN BOX',
       date: 'January 2016',
       projectId: 5,
       type: 'project',
@@ -50,43 +50,11 @@ const sliderHomeDatas = {
     },
     {
       src: 'assets/slider-home/slider-shoot.jpg',
-      title: 'Shootmore',
+      title: 'OTHERS',
       date: 'July 2015',
       projectId : 6,
       type: 'project',
       img: true
-    },
-    {
-      src: 'assets/labs/shader2D.mov',
-      title: 'Shader 2D',
-      date: 'January 2017',
-      projectId : 0,
-      type: 'lab',
-      video: true
-    },
-    {
-      src: 'assets/labs/shape.mp4',
-      title: 'Shape Generation',
-      date: 'December 2016',
-      projectId : 1,
-      type: 'lab',
-      video: true
-    },
-    {
-      src: 'assets/labs/fire.mp4',
-      title: 'Audio Fire',
-      date: 'November 2016',
-      projectId : 2,
-      type: 'lab',
-      video: true
-    },
-    {
-      src: 'assets/labs/triangles.mp4',
-      title: 'Mouse Following',
-      date: 'October 2016',
-      projectId : 3,
-      type: 'lab',
-      video: true
     }
   ]
 }

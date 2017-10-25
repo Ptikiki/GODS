@@ -1,16 +1,15 @@
 import { TweenLite } from 'gsap'
 
-class SliderProject {
+class Slider {
 
   constructor(index) {
-    STORAGE.sliderProjectClass = this
-    this.sliderProjects = document.querySelectorAll('.js-slider-project')
-    this.index = index || 0
+    STORAGE.sliderClass = this
+    this.slider = document.querySelectorAll('.js-slider-project')
 
     this.prevButtons = document.querySelectorAll('.js-project-slider-prev')
     this.nextButtons = document.querySelectorAll('.js-project-slider-next')
 
-    this.activeProject = this.sliderProjects[this.index]
+    this.activeProject = this.slider[this.index]
 
     this.swipeValue
 
@@ -38,11 +37,10 @@ class SliderProject {
   }
 
   setActive() {
-    STORAGE.gridClass.animateGrid()
     STORAGE.currentProjectIndex = Number(this.index)
     this.doSliderProjectDesaparition()
 
-    this.activeProject = this.sliderProjects[this.index]
+    this.activeProject = this.slider[this.index]
 
     let that = this
     setTimeout(function(){
@@ -112,13 +110,13 @@ class SliderProject {
     if (this.index > 0) {
       this.index--
     } else {
-      this.index = this.sliderProjects.length - 1
+      this.index = this.slider.length - 1
     }
     this.setActive()
   }
 
   handleNextClick() {
-    if (this.index < this.sliderProjects.length - 1) {
+    if (this.index < this.slider.length - 1) {
       this.index++
     } else {
       this.index = 0
@@ -131,13 +129,13 @@ class SliderProject {
       return
     }
     if (e.keyCode && e.keyCode == 37) {
-      STORAGE.sliderProjectClass.handlePrevClick()
+      STORAGE.sliderClass.handlePrevClick()
     } else if (e.keyCode && e.keyCode == 39) {
-      STORAGE.sliderProjectClass.handleNextClick()
+      STORAGE.sliderClass.handleNextClick()
     } else if (this.classList.contains('js-project-slider-prev')) {
-      STORAGE.sliderProjectClass.handlePrevClick()
+      STORAGE.sliderClass.handlePrevClick()
     } else {
-      STORAGE.sliderProjectClass.handleNextClick()
+      STORAGE.sliderClass.handleNextClick()
     }
   }
 
@@ -149,11 +147,11 @@ class SliderProject {
     let delta = e.changedTouches[0].clientX - this.swipeValue
 
     if (delta > 0 && Math.abs(delta) > 100) {
-      STORAGE.sliderProjectClass.handlePrevClick()
+      STORAGE.sliderClass.handlePrevClick()
     } else if (delta < 0 && Math.abs(delta) > 100) {
-      STORAGE.sliderProjectClass.handleNextClick()
+      STORAGE.sliderClass.handleNextClick()
     }
   }
 }
 
-export default SliderProject
+export default Slider

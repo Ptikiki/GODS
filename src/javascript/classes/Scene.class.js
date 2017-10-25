@@ -1,6 +1,14 @@
 class Scene {
 
     constructor(options) {
+
+      // this.container = document.getElementById( 'container' )
+      // document.body.appendChild( container )
+
+      // renderer = new THREE.WebGLRenderer()
+      // container.appendChild( renderer.domElement )
+
+
       STORAGE.SceneClass = this
       this.scene = new THREE.Scene()
       STORAGE.scene = this.scene
@@ -10,13 +18,16 @@ class Scene {
       // this.controls = new THREE.OrbitControls( STORAGE.camera )
       // this.controls.target.set( 0, 0, 0 )
       this.light = new THREE.PointLight(0xffffff, 1, Infinity)
-      this.light.position.set(20, 0, 20)
+      this.light.position.set(20, 20, 20)
       STORAGE.scene.add(this.light)
       this.lightAmb = new THREE.AmbientLight(0x777777)
       STORAGE.scene.add(this.lightAmb)
 
       this.raycaster = new THREE.Raycaster()
       this.mouse = new THREE.Vector2()
+
+      this.homeSlider1 = document.querySelector('.js-home-slider')
+      console.log(this.homeSlider1)
 
       this.init()
       this.bind()
@@ -26,38 +37,54 @@ class Scene {
     init() {
       this.createBackground()
       this.createStatue()
+
+      // this.home = document.querySelector('#home')
+      // console.log(this.home)
+      // this.home.style.width = 'window.innerWidth
+      // console.log(this.home.style.width)
     }
 
     createStatue() {
+      let that = this
+
       this.manager = new THREE.LoadingManager()
       this.manager.onProgress = function ( item, loaded, total ) {
-        console.log( item, loaded, total )
+        //console.log( item, loaded, total )
       }
 
+      this.myObjects = []
       this.loader = new THREE.OBJLoader( this.manager )
       this.loader.load( 'assets/statue.obj', function ( object ) {
         // object.traverse( function ( child ) {
         //   if ( child instanceof THREE.Mesh ) {
-        //     child.material.map = texture;
+        //     child.material.map = texture
         //   }
         // } )
 
-        object.position.x = 0
+        object.position.x = 50
         object.position.y = -200
-        object.position.z = 100
+        object.position.z = 150
         //object.rotation.x = -300
-        object.rotation.y = 1.5
+        object.rotation.y = Math.PI/2
         //object.rotation.z = 100
-        object.scale.x = 3
-        object.scale.y = 3
-        object.scale.z = 3
+        object.scale.x = 2.5
+        object.scale.y = 2.5
+        object.scale.z = 2.5
 
         STORAGE.scene.add( object )
-        STORAGE.statue = object
+        that.myObjects.push(object)
+
+
+        // that.box = new THREE.Box3().setFromObject( object )
+        // that.box.getCenter( object.position ) // this re-sets the mesh position
+        // object.position.multiplyScalar( - 1 )
+
+        // that.pivot = new THREE.Group()
+        // STORAGE.scene.add( that.pivot )
+        // that.pivot.add( object )
 
       } )
 
-      console.log(STORAGE.loader)
     }
 
     createBackground() {
@@ -92,15 +119,24 @@ class Scene {
 
     onMouseMove(event) {
       let that = STORAGE.SceneClass
-      
+      that.statue = that.myObjects[0]
+
       that.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1
       that.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1
-      that.raycaster.setFromCamera( that.mouse, STORAGE.camera )
-      that.intersects = that.raycaster.intersectObjects( STORAGE.scene.children )
 
-      console.log(that.mouse.x)
-      
-      //INTERACTION AU MOUVEMENT DE LA SOURIS ==> ROTATION DE LA STATUE
+      that.actualMouseX = that.mouse.x
+      setTimeout(function() {
+        that.newMouseX = that.mouse.x
+      }, 500)
+   
+      if (that.actualMouseX < that.newMouseX && that.statue.rotation.y > 0.7) {
+        console.log("tourche à gauche")
+        that.statue.rotation.y -= 0.01
+      }
+      else if (that.actualMouseX > that.newMouseX && that.statue.rotation.y < 2.3) {
+        console.log("tourne à droite")
+        that.statue.rotation.y += 0.01
+      }
 
     }
 
@@ -117,19 +153,34 @@ class Scene {
     }
 
     onDocumentMouseWheel(event) {
+      let that = STORAGE.SceneClass
       // ZOOM
       /*  
       STORAGE.camera.fov += event.deltaY * 0.05
       STORAGE.camera.updateProjectionMatrix()
       */
             
-      console.log(STORAGE.scene.position.x)
       if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 3000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
         STORAGE.scene.position.x -= Math.abs(event.deltaY) / 3
       } else if (STORAGE.scene.position.x > -45) {
         return
       } else if (event.deltaY < 0) {
         STORAGE.scene.position.x += Math.abs(event.deltaY) / 3
+      }
+
+      console.log(Math.abs(STORAGE.scene.position.x - window.innerWidth))
+
+      if (Math.abs(STORAGE.scene.position.x - window.innerWidth) > 1400 && Math.abs(STORAGE.scene.position.x - window.innerWidth) < 1900 || Math.abs(STORAGE.scene.position.x - window.innerWidth) > 2500) {   
+        TweenLite.to(that.homeSlider1, 0.5, {
+          display: "block",
+          alpha: 1,
+          x: +500,
+        })
+      }
+      else {   
+        TweenLite.to(that.homeSlider1, 0.5, {
+          x: 0,
+        })
       }
     }
 

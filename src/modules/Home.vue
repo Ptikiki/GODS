@@ -1,9 +1,9 @@
 <template>
   <div id="home">
     <section class="home">
-      <p class="home__name"><span class="js-name">MÉLINA GUYON</span><br><span class="js-name">FRONT-END DEVELOPER</span></p>
+      <p class="home__name"><span class="js-name">Alicia Baudry</span><br><span class="js-name">CREATIVE DEVELOPER</span></p>
       <div class="home__container">
-        <img src="http://localhost:3000/assets/logo-melina-blanc.svg" class="home__container__logo "alt="">
+        <img src="#" class="home__container__logo "alt="">
         <slider-home-component></slider-home-component>
       </div>
     </section>
