@@ -2,13 +2,6 @@ class Scene {
 
     constructor(options) {
 
-      // this.container = document.getElementById( 'container' )
-      // document.body.appendChild( container )
-
-      // renderer = new THREE.WebGLRenderer()
-      // container.appendChild( renderer.domElement )
-
-
       STORAGE.SceneClass = this
       this.scene = new THREE.Scene()
       STORAGE.scene = this.scene
@@ -27,7 +20,7 @@ class Scene {
       this.mouse = new THREE.Vector2()
 
       this.homeSlider1 = document.querySelector('.js-home-slider')
-      console.log(this.homeSlider1)
+      // console.log(this.homeSlider1)
 
       this.init()
       this.bind()
@@ -37,11 +30,6 @@ class Scene {
     init() {
       this.createBackground()
       this.createStatue()
-
-      // this.home = document.querySelector('#home')
-      // console.log(this.home)
-      // this.home.style.width = 'window.innerWidth
-      // console.log(this.home.style.width)
     }
 
     createStatue() {
@@ -49,7 +37,6 @@ class Scene {
 
       this.manager = new THREE.LoadingManager()
       this.manager.onProgress = function ( item, loaded, total ) {
-        //console.log( item, loaded, total )
       }
 
       this.myObjects = []
@@ -61,19 +48,18 @@ class Scene {
         //   }
         // } )
 
-        object.position.x = 50
+        object.position.x = 20
         object.position.y = -200
         object.position.z = 150
         //object.rotation.x = -300
         object.rotation.y = Math.PI/2
         //object.rotation.z = 100
-        object.scale.x = 2.5
-        object.scale.y = 2.5
-        object.scale.z = 2.5
+        object.scale.x = 2.8
+        object.scale.y = 2.8
+        object.scale.z = 2.8
 
         STORAGE.scene.add( object )
         that.myObjects.push(object)
-
 
         // that.box = new THREE.Box3().setFromObject( object )
         // that.box.getCenter( object.position ) // this re-sets the mesh position
@@ -92,11 +78,8 @@ class Scene {
       this.texture = new THREE.TextureLoader().load( 'assets/textures/church.jpg' )
       this.textureWidth = 3000
       this.textureHeight = 500
-      //console.log(this.texture.encoding)
       this.ratio = this.textureWidth / this.textureHeight
-      //console.log(this.ratio)
       this.newTextureWidth = this.ratio * window.innerHeight
-      //console.log(this.newTextureWidth)
 
       this.backgroundMesh = new THREE.Mesh(
         new THREE.PlaneGeometry(that.newTextureWidth, window.innerHeight, 0),
@@ -104,15 +87,6 @@ class Scene {
           map: that.texture
         })
       )
-      //this.backgroundMesh.material.depthTest = false
-      //this.backgroundMesh.material.depthWrite = false
-
-      /*this.backgroundScene = new THREE.Scene()
-      STORAGE.backgroundScene = this.backgroundScene
-      this.backgroundCamera = new THREE.Camera()
-      STORAGE.backgroundCamera = this.backgroundCamera
-      STORAGE.backgroundScene.add(STORAGE.backgroundCamera )
-      STORAGE.backgroundScene.add(this.backgroundMesh )*/
       STORAGE.scene.add(this.backgroundMesh)
       STORAGE.carrousel = this.backgroundMesh        
     }
@@ -129,13 +103,13 @@ class Scene {
         that.newMouseX = that.mouse.x
       }, 500)
    
-      if (that.actualMouseX < that.newMouseX && that.statue.rotation.y > 0.7) {
+      if (that.actualMouseX < that.newMouseX && that.statue.rotation.y > 1.2) {
         console.log("tourche à gauche")
-        that.statue.rotation.y -= 0.01
+        that.statue.rotation.y -= 0.007
       }
-      else if (that.actualMouseX > that.newMouseX && that.statue.rotation.y < 2.3) {
+      else if (that.actualMouseX > that.newMouseX && that.statue.rotation.y < 2.1) {
         console.log("tourne à droite")
-        that.statue.rotation.y += 0.01
+        that.statue.rotation.y += 0.007
       }
 
     }
@@ -154,11 +128,6 @@ class Scene {
 
     onDocumentMouseWheel(event) {
       let that = STORAGE.SceneClass
-      // ZOOM
-      /*  
-      STORAGE.camera.fov += event.deltaY * 0.05
-      STORAGE.camera.updateProjectionMatrix()
-      */
             
       if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 3000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
         STORAGE.scene.position.x -= Math.abs(event.deltaY) / 3
@@ -168,20 +137,7 @@ class Scene {
         STORAGE.scene.position.x += Math.abs(event.deltaY) / 3
       }
 
-      console.log(Math.abs(STORAGE.scene.position.x))
-
-      if (Math.abs(STORAGE.scene.position.x) > 10 && Math.abs(STORAGE.scene.position.x) < 400 || Math.abs(STORAGE.scene.position.x) > 1030) {   
-        TweenLite.to(that.homeSlider1, 0.5, {
-          display: "block",
-          alpha: 1,
-          x: +window.innerWidth/2,
-        })
-      }
-      else {   
-        TweenLite.to(that.homeSlider1, 0.5, {
-          x: 200,
-        })
-      }
+      //console.log(Math.abs(STORAGE.scene.position.x))
     }
 
     animate() {

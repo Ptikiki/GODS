@@ -4,154 +4,93 @@ class Slider {
 
   constructor(index) {
     STORAGE.sliderClass = this
-    this.slider = document.querySelectorAll('.js-slider-project')
+    this.homeSlider = document.querySelector('.js-home-slider')
 
-    this.prevButtons = document.querySelectorAll('.js-project-slider-prev')
-    this.nextButtons = document.querySelectorAll('.js-project-slider-next')
+    this.sliderMedias = document.querySelectorAll('.media')
+    this.sliderTitles = document.querySelectorAll('.title')
+    this.sliderDates = document.querySelectorAll('.date')
 
-    this.activeProject = this.slider[this.index]
-
-    this.swipeValue
-
+    this.init()
     this.bind()
+  }
+
+  init() {
+    console.log(this.sliderMedias)
+    console.log(this.sliderTitles)
+    console.log(this.sliderDates)
+  }
+
+  onDocumentMouseWheel(event) {
+    let that = STORAGE.sliderClass
+              
+    if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 3000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
+      STORAGE.scene.position.x -= Math.abs(event.deltaY) / 3
+    } else if (STORAGE.scene.position.x > -45) {
+      return
+    } else if (event.deltaY < 0) {
+      STORAGE.scene.position.x += Math.abs(event.deltaY) / 3
+    }
+
+    // console.log(Math.abs(STORAGE.scene.position.x))
+
+    // first project
+    if (Math.abs(STORAGE.scene.position.x) > 10 && Math.abs(STORAGE.scene.position.x) <= 400) {   
+      TweenLite.to(that.homeSlider, 0.5, {
+        display: "block",
+        alpha: 1,
+        x: +window.innerWidth/2,
+      })
+      for (let i = 0; i < that.sliderMedias.length; i++) {
+        TweenLite.to([that.sliderMedias[i], that.sliderTitles[i], that.sliderDates[i]], 0, {
+          display: "none"
+        })
+        TweenLite.to([that.sliderMedias[0], that.sliderTitles[0], that.sliderDates[0]], 0, {
+          display: "block"
+        })
+      } 
+    }
+    // second project
+    else if (Math.abs(STORAGE.scene.position.x) > 400 && Math.abs(STORAGE.scene.position.x) <= 1030) {   
+      TweenLite.to(that.homeSlider, 0.5, {
+        x: window.innerWidth/8,
+      })
+      for (let i = 0; i < that.sliderMedias.length; i++) {
+         TweenLite.to([that.sliderMedias[i], that.sliderTitles[i], that.sliderDates[i]], 0, {
+          display: "none"
+        })
+        TweenLite.to([that.sliderMedias[1], that.sliderTitles[1], that.sliderDates[1]], 0, {
+          display: "block"
+        })
+      } 
+    }
+    // third project
+    else if (Math.abs(STORAGE.scene.position.x) > 1030) {
+      TweenLite.to(that.homeSlider, 0.5, {
+        display: "block",
+        alpha: 1,
+        x: +window.innerWidth/2,
+      })
+      for (let i = 0; i < that.sliderMedias.length; i++) {
+         TweenLite.to([that.sliderMedias[i], that.sliderTitles[i], that.sliderDates[i]], 0, {
+          display: "none"
+        })
+        TweenLite.to([that.sliderMedias[2], that.sliderTitles[2], that.sliderDates[2]], 0, {
+          display: "block"
+        })
+      }
+    }
   }
 
   bind() {
     let that = this
-    for (var i = 0; i < this.prevButtons.length; i++) {
-      this.prevButtons[i].addEventListener('click', that.handleClick)
-    }
-    for (var i = 0; i < this.nextButtons.length; i++) {
-      this.nextButtons[i].addEventListener('click', that.handleClick)
-    }
-    window.addEventListener('keydown', that.handleClick)
-    window.addEventListener('touchstart', that.handleSwipeStart)
-    window.addEventListener('touchend', that.handleSwipeEnd)
+    document.addEventListener( 'wheel', this.onDocumentMouseWheel, false )
   }
 
   unbind() {
     let that = this
-    window.removeEventListener('keydown', that.handleClick)
-    window.removeEventListener('touchstart', that.handleSwipeStart)
-    window.removeEventListener('touchend', that.handleSwipeEnd)
+    document.aremoveEventListener( 'wheel', this.onDocumentMouseWheel, false )
   }
 
-  setActive() {
-    STORAGE.currentProjectIndex = Number(this.index)
-    this.doSliderProjectDesaparition()
-
-    this.activeProject = this.slider[this.index]
-
-    let that = this
-    setTimeout(function(){
-      that.doSliderProjectAparition()
-    }, 400)
-  }
-
-  doSliderProjectDesaparition() {
-    TweenLite.to(this.activeProject, 0.3, {
-      autoAlpha: 0
-    })
-    TweenLite.set(this.activeProject, {
-      display: "none",
-      delay: 0.3
-    })
-  }
-
-  doSliderProjectAparition() {
-    const title = this.activeProject.querySelector('.project__title')
-    const desc = this.activeProject.querySelector('.project__header__desc')
-    const date = desc.querySelector('.date')
-    const techno = desc.querySelector('.techno')
-    const text = desc.querySelector('.text')
-    const link = desc.querySelector('.link')
-    const roles = desc.querySelector('.roles')
-    TweenLite.set(this.activeProject, {
-      display: "block"
-    })
-    TweenLite.to(this.activeProject, 0.6, {
-      autoAlpha: 1
-    })
-    TweenLite.from(title, 0.4, {
-      alpha: 0,
-      bottom: '55%',
-      delay: 1.2
-    })
-    TweenLite.from(date, 0.6, {
-      alpha: 0,
-      y: 30,
-      delay: 0.4
-    })
-    TweenLite.from(techno, 0.6, {
-      alpha: 0,
-      y: 30,
-      delay: 0.6
-    })
-    TweenLite.from(text, 0.6, {
-      alpha: 0,
-      y: 30,
-      delay: 0.8
-    })
-    if (link) {
-      TweenLite.from(link, 0.6, {
-        alpha: 0,
-        y: 30,
-        delay: 0.8
-      })
-    }
-    TweenLite.from(roles, 0.6, {
-      alpha: 0,
-      y: 30,
-      delay: 1
-    })
-  }
-
-  handlePrevClick() {
-    if (this.index > 0) {
-      this.index--
-    } else {
-      this.index = this.slider.length - 1
-    }
-    this.setActive()
-  }
-
-  handleNextClick() {
-    if (this.index < this.slider.length - 1) {
-      this.index++
-    } else {
-      this.index = 0
-    }
-    this.setActive()
-  }
-
-  handleClick(e) {
-    if (e.keyCode && ( e.keyCode != 37 && e.keyCode != 39 ) ) {
-      return
-    }
-    if (e.keyCode && e.keyCode == 37) {
-      STORAGE.sliderClass.handlePrevClick()
-    } else if (e.keyCode && e.keyCode == 39) {
-      STORAGE.sliderClass.handleNextClick()
-    } else if (this.classList.contains('js-project-slider-prev')) {
-      STORAGE.sliderClass.handlePrevClick()
-    } else {
-      STORAGE.sliderClass.handleNextClick()
-    }
-  }
-
-  handleSwipeStart(e) {
-    this.swipeValue = e.touches[0].clientX
-  }
-
-  handleSwipeEnd(e) {
-    let delta = e.changedTouches[0].clientX - this.swipeValue
-
-    if (delta > 0 && Math.abs(delta) > 100) {
-      STORAGE.sliderClass.handlePrevClick()
-    } else if (delta < 0 && Math.abs(delta) > 100) {
-      STORAGE.sliderClass.handleNextClick()
-    }
-  }
 }
 
 export default Slider
