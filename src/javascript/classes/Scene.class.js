@@ -168,18 +168,18 @@ class Scene {
         STORAGE.scene.position.x += Math.abs(event.deltaY) / 3
       }
 
-      console.log(Math.abs(STORAGE.scene.position.x - window.innerWidth))
+      console.log(Math.abs(STORAGE.scene.position.x))
 
-      if (Math.abs(STORAGE.scene.position.x - window.innerWidth) > 1400 && Math.abs(STORAGE.scene.position.x - window.innerWidth) < 1900 || Math.abs(STORAGE.scene.position.x - window.innerWidth) > 2500) {   
+      if (Math.abs(STORAGE.scene.position.x) > 10 && Math.abs(STORAGE.scene.position.x) < 400 || Math.abs(STORAGE.scene.position.x) > 1030) {   
         TweenLite.to(that.homeSlider1, 0.5, {
           display: "block",
           alpha: 1,
-          x: +500,
+          x: +window.innerWidth/2,
         })
       }
       else {   
         TweenLite.to(that.homeSlider1, 0.5, {
-          x: 0,
+          x: 200,
         })
       }
     }
