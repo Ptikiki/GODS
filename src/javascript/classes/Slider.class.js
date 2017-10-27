@@ -5,19 +5,11 @@ class Slider {
   constructor(index) {
     STORAGE.sliderClass = this
     this.homeSlider = document.querySelector('.js-home-slider')
-
     this.sliderMedias = document.querySelectorAll('.media')
     this.sliderTitles = document.querySelectorAll('.title')
     this.sliderDates = document.querySelectorAll('.date')
 
-    this.init()
     this.bind()
-  }
-
-  init() {
-    console.log(this.sliderMedias)
-    console.log(this.sliderTitles)
-    console.log(this.sliderDates)
   }
 
   onDocumentMouseWheel(event) {
@@ -30,8 +22,6 @@ class Slider {
     } else if (event.deltaY < 0) {
       STORAGE.scene.position.x += Math.abs(event.deltaY) / 3
     }
-
-    // console.log(Math.abs(STORAGE.scene.position.x))
 
     // first project
     if (Math.abs(STORAGE.scene.position.x) > 10 && Math.abs(STORAGE.scene.position.x) <= 400) {   

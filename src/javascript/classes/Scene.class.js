@@ -20,7 +20,6 @@ class Scene {
       this.mouse = new THREE.Vector2()
 
       this.homeSlider1 = document.querySelector('.js-home-slider')
-      // console.log(this.homeSlider1)
 
       this.init()
       this.bind()
@@ -136,8 +135,6 @@ class Scene {
       } else if (event.deltaY < 0) {
         STORAGE.scene.position.x += Math.abs(event.deltaY) / 3
       }
-
-      //console.log(Math.abs(STORAGE.scene.position.x))
     }
 
     animate() {
