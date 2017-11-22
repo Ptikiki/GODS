@@ -1,4 +1,6 @@
 import { TweenLite } from 'gsap'
+import sliderHomeDatas from '../datas/Slider-Home-Datas'
+
 
 class Slider {
 
@@ -15,7 +17,7 @@ class Slider {
   onDocumentMouseWheel(event) {
     let that = STORAGE.sliderClass
               
-    if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 3000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
+    if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 5000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
       STORAGE.scene.position.x -= Math.abs(event.deltaY) / 3
     } else if (STORAGE.scene.position.x > -45) {
       return
@@ -23,52 +25,23 @@ class Slider {
       STORAGE.scene.position.x += Math.abs(event.deltaY) / 3
     }
 
-    // first project
-    if (Math.abs(STORAGE.scene.position.x) > 10 && Math.abs(STORAGE.scene.position.x) <= 400) {   
-      TweenLite.to(that.homeSlider, 0.5, {
-        display: "block",
-        alpha: 1,
-        x: +window.innerWidth/2,
-      })
-      for (let i = 0; i < that.sliderMedias.length; i++) {
-        TweenLite.to([that.sliderMedias[i], that.sliderTitles[i], that.sliderDates[i]], 0, {
-          display: "none"
+    sliderHomeDatas.slider.forEach((project, index) => {
+      if (Math.abs(STORAGE.scene.position.x) > project.minPos && Math.abs(STORAGE.scene.position.x) <= project.maxPos) {   
+        TweenLite.to(that.homeSlider, 0.5, {
+          display: "block",
+          alpha: 1,
+          x: project.slideValue,
         })
-        TweenLite.to([that.sliderMedias[0], that.sliderTitles[0], that.sliderDates[0]], 0, {
-          display: "block"
+        that.sliderMedias.forEach((slide, index) => {
+          TweenLite.to([slide, that.sliderTitles[index], that.sliderDates[index]], 0, {
+            display: "none"
+          })
         })
-      } 
-    }
-    // second project
-    else if (Math.abs(STORAGE.scene.position.x) > 400 && Math.abs(STORAGE.scene.position.x) <= 1030) {   
-      TweenLite.to(that.homeSlider, 0.5, {
-        x: window.innerWidth/8,
-      })
-      for (let i = 0; i < that.sliderMedias.length; i++) {
-         TweenLite.to([that.sliderMedias[i], that.sliderTitles[i], that.sliderDates[i]], 0, {
-          display: "none"
-        })
-        TweenLite.to([that.sliderMedias[1], that.sliderTitles[1], that.sliderDates[1]], 0, {
-          display: "block"
-        })
-      } 
-    }
-    // third project
-    else if (Math.abs(STORAGE.scene.position.x) > 1030) {
-      TweenLite.to(that.homeSlider, 0.5, {
-        display: "block",
-        alpha: 1,
-        x: +window.innerWidth/2,
-      })
-      for (let i = 0; i < that.sliderMedias.length; i++) {
-         TweenLite.to([that.sliderMedias[i], that.sliderTitles[i], that.sliderDates[i]], 0, {
-          display: "none"
-        })
-        TweenLite.to([that.sliderMedias[2], that.sliderTitles[2], that.sliderDates[2]], 0, {
+        TweenLite.to([that.sliderMedias[index], that.sliderTitles[index], that.sliderDates[index]], 0, {
           display: "block"
         })
       }
-    }
+    })
   }
 
   bind() {

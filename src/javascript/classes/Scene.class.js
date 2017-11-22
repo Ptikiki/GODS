@@ -10,10 +10,10 @@ class Scene {
       STORAGE.camera.position.z = 480
       // this.controls = new THREE.OrbitControls( STORAGE.camera )
       // this.controls.target.set( 0, 0, 0 )
-      this.light = new THREE.PointLight(0xffffff, 1, Infinity)
-      this.light.position.set(20, 20, 20)
+      this.light = new THREE.PointLight(0xffffff, 0.7, Infinity)
+      this.light.position.set(-50, 0, 250)
       STORAGE.scene.add(this.light)
-      this.lightAmb = new THREE.AmbientLight(0x777777)
+      this.lightAmb = new THREE.AmbientLight(0x777777, 1.3)
       STORAGE.scene.add(this.lightAmb)
 
       this.raycaster = new THREE.Raycaster()
@@ -27,7 +27,7 @@ class Scene {
     }
 
     init() {
-      this.createBackground()
+      //this.createBackground()
       this.createStatue()
     }
 
@@ -41,33 +41,16 @@ class Scene {
       this.myObjects = []
       this.loader = new THREE.OBJLoader( this.manager )
       this.loader.load( 'assets/statue.obj', function ( object ) {
-        // object.traverse( function ( child ) {
-        //   if ( child instanceof THREE.Mesh ) {
-        //     child.material.map = texture
-        //   }
-        // } )
-
         object.position.x = 20
         object.position.y = -200
         object.position.z = 150
-        //object.rotation.x = -300
         object.rotation.y = Math.PI/2
-        //object.rotation.z = 100
         object.scale.x = 2.8
         object.scale.y = 2.8
         object.scale.z = 2.8
 
         STORAGE.scene.add( object )
         that.myObjects.push(object)
-
-        // that.box = new THREE.Box3().setFromObject( object )
-        // that.box.getCenter( object.position ) // this re-sets the mesh position
-        // object.position.multiplyScalar( - 1 )
-
-        // that.pivot = new THREE.Group()
-        // STORAGE.scene.add( that.pivot )
-        // that.pivot.add( object )
-
       } )
 
     }
@@ -128,7 +111,7 @@ class Scene {
     onDocumentMouseWheel(event) {
       let that = STORAGE.SceneClass
             
-      if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 3000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
+      if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 5000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
         STORAGE.scene.position.x -= Math.abs(event.deltaY) / 3
       } else if (STORAGE.scene.position.x > -45) {
         return

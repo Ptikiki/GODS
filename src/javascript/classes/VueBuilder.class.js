@@ -3,7 +3,6 @@ import Vue from 'vue'
 
 import HomeTemplate from '../../modules/Home.vue'
 import AboutTemplate from '../../modules/About.vue'
-import ProjectTemplate from '../../modules/Project.vue'
 
 import Slider from './Slider.class.js'
 
