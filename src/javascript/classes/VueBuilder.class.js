@@ -3,6 +3,7 @@ import Vue from 'vue'
 
 import HomeTemplate from '../../modules/Home.vue'
 import AboutTemplate from '../../modules/About.vue'
+import ProjectsListTemplate from '../../modules/ProjectsList.vue'
 
 import Slider from './Slider.class.js'
 
@@ -44,6 +45,21 @@ class VueBuilder {
       computed: {
         viewModel() {
           return AboutTemplate
+        }
+      },
+      render(h) {
+        return h(this.viewModel)
+      }
+    })
+  }
+
+  initProjectsList() {
+    this.projectsList = new Vue({
+      el: '#projects',
+      data: {},
+      computed: {
+        viewModel() {
+          return ProjectsListTemplate
         }
       },
       render(h) {

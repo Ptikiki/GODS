@@ -1,13 +1,16 @@
 .about {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding-left: 5%;
-  padding-right: 5%;
-  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  height: 500px;
+  width: 100%;
+  background-color: black;
+  padding-top: 15%;
+  text-align: center;
   z-index: 4;
-  max-width: 1460px;
   margin: 0 auto;
+  color: white;
+}
 
+.about a {
+  color: white;
 }

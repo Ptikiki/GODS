@@ -1,3 +1,5 @@
+import sliderHomeDatas from '../datas/Slider-Home-Datas'
+
 class Scene {
 
     constructor(options) {
@@ -5,9 +7,9 @@ class Scene {
       STORAGE.SceneClass = this
       this.scene = new THREE.Scene()
       STORAGE.scene = this.scene
-      this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
       STORAGE.camera = this.camera
-      STORAGE.camera.position.z = 480
+      STORAGE.camera.position.z = 300
       // this.controls = new THREE.OrbitControls( STORAGE.camera )
       // this.controls.target.set( 0, 0, 0 )
       this.light = new THREE.PointLight(0xffffff, 0.7, Infinity)
@@ -28,31 +30,48 @@ class Scene {
 
     init() {
       //this.createBackground()
-      this.createStatue()
+      this.createStatues()
+      this.linkClick()
     }
 
-    createStatue() {
+    createStatues() {
       let that = this
 
-      this.manager = new THREE.LoadingManager()
-      this.manager.onProgress = function ( item, loaded, total ) {
-      }
-
       this.myObjects = []
-      this.loader = new THREE.OBJLoader( this.manager )
-      this.loader.load( 'assets/statue.obj', function ( object ) {
-        object.position.x = 20
-        object.position.y = -200
-        object.position.z = 150
-        object.rotation.y = Math.PI/2
-        object.scale.x = 2.8
-        object.scale.y = 2.8
-        object.scale.z = 2.8
+      this.loader = new THREE.OBJLoader()
 
-        STORAGE.scene.add( object )
-        that.myObjects.push(object)
-      } )
+      sliderHomeDatas.slider.forEach((project, index) => {
 
+        this.loader.load( project.objUrl, function ( object ) {
+          object.position.x = project.objX
+          object.position.y = project.objY
+          object.position.z = project.objZ
+          object.rotation.y = project.objRotY
+    
+          STORAGE.scene.add( object )
+          that.myObjects.push(object)
+        } )
+
+      })
+
+    }
+
+    linkClick() {
+      this.el = document.querySelector('.js-nav')
+      this.navigationItems = this.el.querySelectorAll('.js-nav-item')
+
+      for (var i = 0; i < this.navigationItems.length; i++) {
+        STORAGE.SceneClass.navigationItems[i].addEventListener('click', function(e) {
+          STORAGE.SceneClass.activeSectionName = e.target.getAttribute('id') 
+          console.log(STORAGE.SceneClass.activeSectionName)
+          if (STORAGE.SceneClass.activeSectionName == '#about') {
+            STORAGE.vueBuilderClass.initAbout() 
+          }
+          else if (STORAGE.SceneClass.activeSectionName == '#projects') {
+            STORAGE.vueBuilderClass.initProjectsList() 
+          }
+        })
+      }
     }
 
     createBackground() {
@@ -97,7 +116,6 @@ class Scene {
     }
 
     bind() {
-      document.addEventListener( 'wheel', this.onDocumentMouseWheel, false )
       document.addEventListener('mousemove', this.onMouseMove, false )
       window.addEventListener( 'resize', this.onWindowResize, false )
     }
@@ -106,18 +124,6 @@ class Scene {
       STORAGE.camera.aspect = window.innerWidth / window.innerHeight
       STORAGE.camera.updateProjectionMatrix()
       STORAGE.renderer.setSize(window.innerWidth, window.innerHeight)
-    }
-
-    onDocumentMouseWheel(event) {
-      let that = STORAGE.SceneClass
-            
-      if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 5000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
-        STORAGE.scene.position.x -= Math.abs(event.deltaY) / 3
-      } else if (STORAGE.scene.position.x > -45) {
-        return
-      } else if (event.deltaY < 0) {
-        STORAGE.scene.position.x += Math.abs(event.deltaY) / 3
-      }
     }
 
     animate() {

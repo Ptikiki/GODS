@@ -1,52 +1,72 @@
 const sliderHomeDatas = {
   slider: [
     {
-      minPos: 10,
-      maxPos: 400,
+      minPos: 30,
+      maxPos: 100,
       slideValue: +window.innerWidth/2,
       src: 'assets/slider-home/slider-sum.jpg',
       title: 'Les Fontaines de Versailles',
       date: 'Janvier 2016',
       projectId: 0,
       type: 'project',
-      img: true
+      img: true,
+      objUrl: 'assets/statue.obj',
+      objX: 0,
+      objY: -60,
+      objZ: 180,
+      objRotY: Math.PI/2
     },
     {
-      minPos: 400,
-      maxPos: 1030,
+      minPos: 100,
+      maxPos: 200,
       slideValue: window.innerWidth/8,
       src: 'assets/slider-home/slider-travel.jpg',
       title: 'All Real',
       date: 'Octobre 2017',
       projectId: 1,
       type: 'project',
-      img: true
+      img: true,
+      objUrl: 'assets/statue.obj',
+      objX: 200,
+      objY: -60,
+      objZ: 180,
+      objRotY: Math.PI/2
     },
     {
-      minPos: 1030,
-      maxPos: 1660,
+      minPos: 200,
+      maxPos: 300,
       slideValue: +window.innerWidth/2,
       src: 'assets/slider-home/slider-terre-promise.png',
       title: 'Shakin\'BOX',
       date: 'Avril 2016',
       projectId: 2,
       type: 'project',
-      img: true
+      img: true,
+      objUrl: 'assets/statue.obj',
+      objX: 400,
+      objY: -60,
+      objZ: 180,
+      objRotY: Math.PI/2
     },
     {      
-      minPos: 1660,
-      maxPos: 2290,
+      minPos: 300,
+      maxPos: 400,
       slideValue: window.innerWidth/8,
       src: 'assets/slider-home/slider-nosheetpaper.jpg',
       title: 'SUM',
       date: 'Juin 2017',
       projectId: 3,
       type: 'project',
-      img: true
+      img: true,
+      objUrl: 'assets/statue.obj',
+      objX: 600,
+      objY: -60,
+      objZ: 180,
+      objRotY: Math.PI/2
     },
     {
-      minPos: 2290,
-      maxPos: 2920,
+      minPos: 400,
+      maxPos: 500,
       slideValue: +window.innerWidth/2,
       src: 'assets/slider-home/slider-memos.jpg',
       title: 'Portfolio Lucas',
@@ -56,8 +76,8 @@ const sliderHomeDatas = {
       img: true
     },
     {
-      minPos: 2920,
-      maxPos: 3550,
+      minPos: 500,
+      maxPos: 600,
       slideValue: window.innerWidth/8,
       src: 'assets/slider-home/slider-change.png',
       title: 'Arpegia',
@@ -67,8 +87,8 @@ const sliderHomeDatas = {
       img: true
     },
     {
-      minPos: 3350,
-      maxPos: 3980,
+      minPos: 600,
+      maxPos: 700,
       slideValue: +window.innerWidth/2,
       src: 'assets/slider-home/slider-shoot.jpg',
       title: 'Advergame',

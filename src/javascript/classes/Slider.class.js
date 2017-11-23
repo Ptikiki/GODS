@@ -11,13 +11,18 @@ class Slider {
     this.sliderTitles = document.querySelectorAll('.title')
     this.sliderDates = document.querySelectorAll('.date')
 
+    this.init()
     this.bind()
+  }
+
+  init() {
+    
   }
 
   onDocumentMouseWheel(event) {
     let that = STORAGE.sliderClass
               
-    if (Math.abs(STORAGE.scene.position.x - window.innerWidth) < 5000 - 45 && event.deltaY > 0 ) { // stop le défilement au dernier sprite (défile tant que x abs < à largeur totale de tous les sprites-1)
+    if (Math.abs(STORAGE.scene.position.x ) < 700 - 45 && event.deltaY > 0 ) {
       STORAGE.scene.position.x -= Math.abs(event.deltaY) / 3
     } else if (STORAGE.scene.position.x > -45) {
       return
