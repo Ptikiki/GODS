@@ -29,31 +29,8 @@ class Scene {
     }
 
     init() {
-      //this.createBackground()
-      this.createStatues()
       this.linkClick()
-    }
-
-    createStatues() {
-      let that = this
-
-      this.myObjects = []
-      this.loader = new THREE.OBJLoader()
-
-      sliderHomeDatas.slider.forEach((project, index) => {
-
-        this.loader.load( project.objUrl, function ( object ) {
-          object.position.x = project.objX
-          object.position.y = project.objY
-          object.position.z = project.objZ
-          object.rotation.y = project.objRotY
-    
-          STORAGE.scene.add( object )
-          that.myObjects.push(object)
-        } )
-
-      })
-
+      this.createStatues()
     }
 
     linkClick() {
@@ -72,6 +49,28 @@ class Scene {
           }
         })
       }
+    }
+
+    createStatues() {
+      let that = this
+
+      this.myStatues = []
+      this.loader = new THREE.OBJLoader()
+
+      sliderHomeDatas.slider.forEach((project, index) => {
+
+        this.loader.load( project.objUrl, function ( object ) {
+          object.position.x = project.objX
+          object.position.y = project.objY
+          object.position.z = project.objZ
+          object.rotation.y = project.objRotY
+    
+          STORAGE.scene.add( object )
+          that.myStatues.push(object)
+        } )
+
+      })
+
     }
 
     createBackground() {
@@ -94,25 +93,27 @@ class Scene {
 
     onMouseMove(event) {
       let that = STORAGE.SceneClass
-      that.statue = that.myObjects[0]
 
-      that.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1
-      that.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1
+      that.myStatues.forEach((statue, index) => {
+        statue = that.myStatues[index]
 
-      that.actualMouseX = that.mouse.x
-      setTimeout(function() {
-        that.newMouseX = that.mouse.x
-      }, 500)
-   
-      if (that.actualMouseX < that.newMouseX && that.statue.rotation.y > 1.2) {
-        console.log("tourche à gauche")
-        that.statue.rotation.y -= 0.007
-      }
-      else if (that.actualMouseX > that.newMouseX && that.statue.rotation.y < 2.1) {
-        console.log("tourne à droite")
-        that.statue.rotation.y += 0.007
-      }
+        that.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1
+        that.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1
 
+        that.actualMouseX = that.mouse.x
+        setTimeout(function() {
+          that.newMouseX = that.mouse.x
+        }, 500)
+     
+        if (statue && that.actualMouseX < that.newMouseX && statue.rotation.y > 1.2) {
+          console.log("tourche à gauche")
+          statue.rotation.y -= 0.007
+        }
+        else if (statue && that.actualMouseX > that.newMouseX && statue.rotation.y < 2.1) {
+          console.log("tourne à droite")
+          statue.rotation.y += 0.007
+        }
+      })
     }
 
     bind() {
